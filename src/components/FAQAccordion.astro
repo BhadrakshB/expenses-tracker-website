@@ -1,0 +1,111 @@
+---
+export interface Props {
+  question: string;
+  answer: string;
+}
+
+const { question, answer } = Astro.props;
+const id = question.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+---
+
+<details class="faq-item" id={id}>
+  <summary class="faq-question">
+    <span class="question-text">{question}</span>
+    <span class="faq-icon" aria-hidden="true">+</span>
+  </summary>
+  <div class="faq-answer">
+    <p set:html={answer} />
+  </div>
+</details>
+
+<style>
+  .faq-item {
+    border: 3px solid var(--text-primary);
+    background: var(--background-secondary);
+    transition: all 150ms ease;
+  }
+  
+  .faq-item[open] {
+    background: var(--background-tertiary);
+  }
+  
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+  
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+  
+  .faq-question::marker {
+    content: '';
+  }
+  
+  .question-text {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-primary);
+  }
+  
+  .faq-icon {
+    flex-shrink: 0;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--text-muted);
+    color: var(--text-secondary);
+    transition: all 150ms ease;
+  }
+  
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--background-primary);
+  }
+  
+  .faq-question:hover .faq-icon {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+  }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    border-top: 2px solid var(--background-primary);
+  }
+  
+  .faq-answer p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+  
+  .faq-answer :global(strong) {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  
+  .faq-answer :global(a) {
+    color: var(--accent-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  
+  .faq-answer :global(a:hover) {
+    color: var(--text-primary);
+  }
+</style>

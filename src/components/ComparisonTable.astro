@@ -1,0 +1,131 @@
+---
+export interface Feature {
+  name: string;
+  free: boolean | string;
+  pro: boolean | string;
+}
+
+export interface Props {
+  features: Feature[];
+}
+
+const { features } = Astro.props;
+
+const formatValue = (value: boolean | string) => {
+  if (typeof value === 'boolean') {
+    return value ? '✓' : '—';
+  }
+  return value;
+};
+---
+
+<div class="comparison-table-wrapper">
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th class="feature-col">Feature</th>
+        <th class="plan-col">Free</th>
+        <th class="plan-col pro-col">Pro</th>
+      </tr>
+    </thead>
+    <tbody>
+      {features.map(feature => (
+        <tr>
+          <td class="feature-name">{feature.name}</td>
+          <td class="feature-value free-value">
+            <span class:list={[{ 'has-check': feature.free === true, 'has-dash': feature.free === false }]}>
+              {formatValue(feature.free)}
+            </span>
+          </td>
+          <td class="feature-value pro-value">
+            <span class:list={[{ 'has-check': feature.pro === true || (typeof feature.pro === 'string' && feature.pro !== '—') }]}>
+              {formatValue(feature.pro)}
+            </span>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .comparison-table-wrapper {
+    overflow-x: auto;
+    border: 3px solid var(--text-primary);
+  }
+  
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 500px;
+  }
+  
+  thead {
+    background: var(--background-tertiary);
+  }
+  
+  th {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 3px solid var(--text-primary);
+  }
+  
+  .plan-col {
+    text-align: center;
+    width: 120px;
+  }
+  
+  .pro-col {
+    background: var(--accent-primary);
+    color: var(--background-primary);
+  }
+  
+  tbody tr {
+    border-bottom: 2px solid var(--background-tertiary);
+    transition: background 150ms ease;
+  }
+  
+  tbody tr:hover {
+    background: var(--background-secondary);
+  }
+  
+  tbody tr:last-child {
+    border-bottom: none;
+  }
+  
+  td {
+    padding: 1rem;
+  }
+  
+  .feature-name {
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  
+  .feature-value {
+    text-align: center;
+    font-weight: 600;
+  }
+  
+  .free-value {
+    color: var(--text-secondary);
+  }
+  
+  .has-check {
+    color: var(--accent-primary);
+    font-size: 1.25rem;
+  }
+  
+  .has-dash {
+    color: var(--text-muted);
+  }
+  
+  .pro-value .has-check {
+    color: var(--accent-primary);
+  }
+</style>

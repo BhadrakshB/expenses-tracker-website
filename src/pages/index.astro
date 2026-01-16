@@ -36,31 +36,14 @@ const comparisonFeatures = [
   { name: 'Priority Support', free: false, pro: true },
 ];
 
-const testimonials = [
-  {
-    quote: "Finally, an expense tracker that works offline! Perfect for my travels across India where internet is spotty.",
-    name: "Priya Sharma",
-    location: "Mumbai, India",
-    rating: 5,
-  },
-  {
-    quote: "The SMS tracking is magical. It catches all my UPI transactions automatically. Saves me so much time!",
-    name: "Rahul Verma",
-    location: "Bangalore, India",
-    rating: 5,
-  },
-  {
-    quote: "We use the family sharing feature to manage our household budget. It's been a game-changer for us.",
-    name: "Sarah & Mike Chen",
-    location: "Singapore",
-    rating: 5,
-  },
+const testimonials: { quote: string; name: string; location: string; rating: number }[] = [
+  // Testimonials will be added as users provide feedback
 ];
 
 const stats = [
-  { value: '50K', suffix: '+', label: 'Downloads' },
-  { value: '4.8', suffix: '★', label: 'App Rating' },
-  { value: '12', suffix: '', label: 'Countries' },
+  { value: '0', suffix: '', label: 'Downloads' },
+  { value: 'New', suffix: '', label: 'App' },
+  { value: '1', suffix: '', label: 'Country' },
 ];
 
 const jsonLd = {
@@ -76,8 +59,8 @@ const jsonLd = {
   },
   "aggregateRating": {
     "@type": "AggregateRating",
-    "ratingValue": "4.8",
-    "ratingCount": "5000"
+    "ratingValue": "0",
+    "ratingCount": "0"
   }
 };
 ---
@@ -105,8 +88,8 @@ const jsonLd = {
           Works offline. No signup required.
         </p>
         <div class="hero-counter">
-          <span class="counter-value">₹45,23,456</span>
-          <span class="counter-label">tracked by users this month</span>
+          <span class="counter-value">₹0</span>
+          <span class="counter-label">Start tracking your expenses today</span>
         </div>
         <div class="hero-cta">
           <BrutalButton 
@@ -144,7 +127,7 @@ const jsonLd = {
             <div class="app-preview">
               <div class="app-header">
                 <span class="app-title">💰 Expenses</span>
-                <span class="app-balance">₹24,500</span>
+                <span class="app-balance">₹0</span>
               </div>
               <div class="expense-list">
                 <div class="expense-item">

@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+// React components with Framer Motion
+import BentoGrid from '../components/react/BentoGrid.jsx';
+import HeroSection from '../components/react/HeroSection.jsx';
+import CTASection from '../components/react/CTASection.jsx';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "Expenses Tracker",
+  "operatingSystem": "iOS, Android",
+  "applicationCategory": "FinanceApplication",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+};
+---
+
+<BaseLayout 
+  title="Track Every Cent" 
+  description="Take control of your money with Expenses Tracker. Offline-first expense tracking, AI insights, bank SMS detection, and beautiful reports. Free download."
+>
+  <Fragment slot="structured-data">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+  
+  <Header slot="header" />
+  
+  <!-- Hero Section with Framer Motion -->
+  <HeroSection client:load />
+  
+  <!-- Bento Grid Features with Framer Motion -->
+  <section class="bento-section">
+    <div class="container">
+      <BentoGrid client:load />
+    </div>
+  </section>
+  
+  <!-- CTA Section with Framer Motion -->
+  <CTASection client:load />
+  
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .bento-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+</style>
+
+<script>
+  // Track Variant B page view
+  if (typeof window !== 'undefined' && window.posthog) {
+    window.posthog.capture('page_viewed', { variant: 'B', page: 'landing' });
+  } else {
+    // Wait for PostHog to load
+    document.addEventListener('DOMContentLoaded', () => {
+      const checkPostHog = setInterval(() => {
+        if (window.posthog) {
+          window.posthog.capture('page_viewed', { variant: 'B', page: 'landing' });
+          clearInterval(checkPostHog);
+        }
+      }, 100);
+      // Stop checking after 5 seconds
+      setTimeout(() => clearInterval(checkPostHog), 5000);
+    });
+  }
+</script>

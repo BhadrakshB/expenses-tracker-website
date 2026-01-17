@@ -27,10 +27,13 @@ const navLinks = [
     </nav>
     
     <div class="header-actions">
-      <a href="/pricing" class="brutal-btn brutal-btn-primary header-cta">
+      <a 
+        href="/pricing" 
+        class="brutal-btn brutal-btn-primary header-cta"
+        onclick="posthog.capture('my_custom_event', { property: 'value' })"
+      >
         Get Pro
       </a>
-      
       <button 
         class="mobile-menu-btn" 
         aria-label="Toggle mobile menu"

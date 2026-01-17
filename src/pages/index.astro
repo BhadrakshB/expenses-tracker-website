@@ -1,4 +1,31 @@
 ---
+// Server-render this page to enable A/B testing with cookies
+export const prerender = false;
+
+import PostHogNode, { getDistinctId } from '../lib/posthog-node.js';
+
+// A/B Test: Check feature flag server-side for flicker-free experience
+const distinctId = getDistinctId(Astro.cookies);
+
+try {
+  const variant = await PostHogNode().getFeatureFlag('landing-page-experiment', distinctId);
+  
+  // Redirect to Variant B if user is in test group
+  if (variant === 'test') {
+    return Astro.redirect('/index-b');
+  }
+} catch (error) {
+  // If PostHog fails, default to Variant A (control)
+  console.error('PostHog feature flag error:', error);
+}
+
+// Track that user saw Variant A
+PostHogNode().capture({
+  distinctId,
+  event: 'page_viewed',
+  properties: { variant: 'A', page: 'landing' }
+});
+
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';

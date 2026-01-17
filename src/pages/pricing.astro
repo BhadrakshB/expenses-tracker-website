@@ -1,103 +1,113 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import PricingCard from '../components/PricingCard.astro';
-import FAQAccordion from '../components/FAQAccordion.astro';
-import SectionHeading from '../components/SectionHeading.astro';
-import BrutalButton from '../components/BrutalButton.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PricingCard from "../components/PricingCard.astro";
+import FAQAccordion from "../components/FAQAccordion.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import BrutalButton from "../components/BrutalButton.astro";
 
 const freeFeatures = [
-  { text: 'Unlimited expenses', included: true },
-  { text: 'Categories & tags', included: true },
-  { text: '1 bank account', included: true },
-  { text: 'Offline storage', included: true },
-  { text: 'CSV export (1×/week)', included: true },
-  { text: 'Biometric lock', included: true },
-  { text: 'Cloud sync', included: false },
-  { text: 'AI insights', included: false },
-  { text: 'SMS tracking', included: false },
-  { text: 'Bill reminders', included: false },
+  { text: "Unlimited expenses", included: true },
+  { text: "Categories & tags", included: true },
+  { text: "1 bank account", included: true },
+  { text: "Offline storage", included: true },
+  { text: "CSV export (1×/week)", included: true },
+  { text: "Biometric lock", included: true },
+  { text: "Cloud sync", included: false },
+  { text: "AI insights", included: false },
+  { text: "SMS tracking", included: false },
+  { text: "Bill reminders", included: false },
 ];
 
 const proFeatures = [
-  { text: 'Everything in Free', included: true },
-  { text: 'Unlimited bank accounts', included: true },
-  { text: 'Cloud sync across devices', included: true },
-  { text: 'AI-powered insights', included: true },
-  { text: 'Automatic SMS tracking', included: true },
-  { text: 'Bill & EMI reminders', included: true },
-  { text: 'Family sharing (up to 5)', included: true },
-  { text: 'Unlimited exports', included: true },
-  { text: 'Priority support', included: true },
-  { text: 'Early access to features', included: true },
+  { text: "Everything in Free", included: true },
+  { text: "Unlimited bank accounts", included: true },
+  { text: "Cloud sync across devices", included: true },
+  { text: "AI-powered insights", included: true },
+  { text: "Automatic SMS tracking", included: true },
+  { text: "Bill & EMI reminders", included: true },
+  { text: "Family sharing (up to 5)", included: true },
+  { text: "Unlimited exports", included: true },
+  { text: "Priority support", included: true },
+  { text: "Early access to features", included: true },
 ];
 
 const faqs = [
   {
-    question: 'What happens when my trial ends?',
-    answer: 'You\'ll automatically switch to the Free plan. <strong>No charges</strong>. All your data remains safe, but Pro features become unavailable until you upgrade.'
+    question: "What happens when my trial ends?",
+    answer:
+      "You'll automatically switch to the Free plan. <strong>No charges</strong>. All your data remains safe, but Pro features become unavailable until you upgrade.",
   },
   {
-    question: 'Can I cancel anytime?',
-    answer: 'Absolutely! Cancel anytime from your device\'s subscription settings. You\'ll retain Pro access until the end of your billing period.'
+    question: "Can I cancel anytime?",
+    answer:
+      "Absolutely! Cancel anytime from your device's subscription settings. You'll retain Pro access until the end of your billing period.",
   },
   {
-    question: 'How do refunds work?',
-    answer: 'We offer a <strong>14-day full refund</strong> policy. If you\'re not satisfied, contact us or request a refund through the App Store/Play Store. See our <a href="/refunds">refund policy</a> for details.'
+    question: "How do refunds work?",
+    answer:
+      'We offer a <strong>14-day full refund</strong> policy. If you\'re not satisfied, contact us or request a refund through the App Store/Play Store. See our <a href="/refunds">refund policy</a> for details.',
   },
   {
-    question: 'Is my financial data secure?',
-    answer: 'Your security is our priority. We use <strong>TLS 1.3</strong> encryption in transit and <strong>AES-256</strong> encryption at rest. We never sell your data and follow GDPR/CCPA guidelines.'
+    question: "Is my financial data secure?",
+    answer:
+      "Your security is our priority. We use <strong>TLS 1.3</strong> encryption in transit and <strong>AES-256</strong> encryption at rest. We never sell your data and follow GDPR/CCPA guidelines.",
   },
   {
-    question: 'Does the app work offline?',
-    answer: 'Yes! Both Free and Pro work fully offline. Pro users get automatic sync when connected. Your data is always available, internet or not.'
+    question: "Does the app work offline?",
+    answer:
+      "Yes! Both Free and Pro work fully offline. Pro users get automatic sync when connected. Your data is always available, internet or not.",
   },
   {
-    question: 'How does family sharing work?',
-    answer: 'Pro subscribers can invite up to 5 family members. Each gets their own account with full Pro features. Share budgets and track household expenses together.'
+    question: "How does family sharing work?",
+    answer:
+      "Pro subscribers can invite up to 5 family members. Each gets their own account with full Pro features. Share budgets and track household expenses together.",
   },
 ];
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": faqs.map(faq => ({
+  mainEntity: faqs.map((faq) => ({
     "@type": "Question",
-    "name": faq.question,
-    "acceptedAnswer": {
+    name: faq.question,
+    acceptedAnswer: {
       "@type": "Answer",
-      "text": faq.answer.replace(/<[^>]*>/g, '')
-    }
-  }))
+      text: faq.answer.replace(/<[^>]*>/g, ""),
+    },
+  })),
 };
 ---
 
-<BaseLayout 
-  title="Simple, Honest Pricing" 
+<BaseLayout
+  title="Simple, Honest Pricing"
   description="Choose the plan that fits your needs. Start free forever or unlock everything with Pro. 14-day free trial, cancel anytime."
   canonical="/pricing"
 >
   <Fragment slot="structured-data">
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </Fragment>
-  
+
   <Header slot="header" />
-  
+
   <!-- Pricing Hero -->
   <section class="pricing-hero">
     <div class="container">
-      <h1 class="pricing-title">SIMPLE, HONEST<br/><span class="title-accent">PRICING</span></h1>
-      <p class="pricing-subtitle">No hidden fees. No surprises. Cancel anytime.</p>
+      <h1 class="pricing-title">
+        SIMPLE, HONEST<br /><span class="title-accent">PRICING</span>
+      </h1>
+      <p class="pricing-subtitle">
+        No hidden fees. No surprises. Cancel anytime.
+      </p>
     </div>
   </section>
-  
+
   <!-- Pricing Cards -->
   <section class="pricing-cards-section">
     <div class="container">
       <div class="pricing-grid">
-        <PricingCard 
+        <PricingCard
           name="Free"
           price="$0"
           description="Everything you need to get started"
@@ -105,7 +115,7 @@ const jsonLd = {
           ctaText="Download Free"
           ctaHref="https://apps.apple.com/app/expenses-tracker"
         />
-        <PricingCard 
+        <PricingCard
           name="Pro"
           price="$4.99"
           period="month"
@@ -117,34 +127,35 @@ const jsonLd = {
           badge="Most Popular"
         />
       </div>
-      
+
       <div class="yearly-offer">
         <div class="offer-badge">SAVE 20%</div>
         <p class="offer-text">
-          Pay yearly for <strong>$49.99/year</strong> 
+          Pay yearly for <strong>$49.99/year</strong>
           <span class="offer-savings">(That's $4.17/month)</span>
         </p>
       </div>
     </div>
   </section>
-  
-  
+
   <!-- FAQ Section -->
   <section class="faq-section section-dark">
     <div class="container container-narrow">
-      <SectionHeading 
-        title="Questions?" 
+      <SectionHeading
+        title="Questions?"
         subtitle="Everything you need to know about Expenses Tracker Pro."
         align="center"
       />
       <div class="faq-list">
-        {faqs.map(faq => (
-          <FAQAccordion question={faq.question} answer={faq.answer} />
-        ))}
+        {
+          faqs.map((faq) => (
+            <FAQAccordion question={faq.question} answer={faq.answer} />
+          ))
+        }
       </div>
     </div>
   </section>
-  
+
   <!-- Guarantee Banner -->
   <section class="guarantee-section">
     <div class="container">
@@ -163,7 +174,7 @@ const jsonLd = {
       </div>
     </div>
   </section>
-  
+
   <Footer slot="footer" />
 </BaseLayout>
 
@@ -173,7 +184,7 @@ const jsonLd = {
     padding-block: clamp(4rem, 10vh, 6rem) clamp(2rem, 5vh, 4rem);
     text-align: center;
   }
-  
+
   .pricing-title {
     font-size: clamp(2.5rem, 8vw, 5rem);
     font-weight: 900;
@@ -181,21 +192,21 @@ const jsonLd = {
     letter-spacing: -0.03em;
     margin-bottom: 1rem;
   }
-  
+
   .title-accent {
     color: var(--accent-primary);
   }
-  
+
   .pricing-subtitle {
     font-size: 1.25rem;
     color: var(--text-secondary);
   }
-  
+
   /* Pricing Cards */
   .pricing-cards-section {
     padding-block: 2rem 4rem;
   }
-  
+
   .pricing-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -203,13 +214,13 @@ const jsonLd = {
     max-width: 900px;
     margin: 0 auto;
   }
-  
+
   @media (min-width: 768px) {
     .pricing-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
-  
+
   .yearly-offer {
     display: flex;
     align-items: center;
@@ -222,11 +233,11 @@ const jsonLd = {
     max-width: 500px;
     margin-inline: auto;
   }
-  
+
   .offer-badge {
     background: var(--accent-primary);
     color: var(--background-primary);
-    font-family: 'Manrope', system-ui, sans-serif;
+    font-family: "Manrope", system-ui, sans-serif;
     font-weight: 800;
     font-size: 0.625rem;
     text-transform: uppercase;
@@ -234,38 +245,37 @@ const jsonLd = {
     padding: 0.375rem 0.75rem;
     white-space: nowrap;
   }
-  
+
   .offer-text {
     font-size: 0.9375rem;
     color: var(--text-secondary);
   }
-  
+
   .offer-text strong {
     color: var(--text-primary);
   }
-  
+
   .offer-savings {
     color: var(--text-muted);
     font-size: 0.8125rem;
   }
-  
-  
+
   /* FAQ Section */
   .faq-section {
     padding-block: clamp(4rem, 10vh, 6rem);
   }
-  
+
   .faq-list {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
   }
-  
+
   /* Guarantee Section */
   .guarantee-section {
     padding-block: clamp(3rem, 8vh, 5rem);
   }
-  
+
   .guarantee-banner {
     display: flex;
     flex-direction: column;
@@ -278,25 +288,25 @@ const jsonLd = {
     max-width: 700px;
     margin: 0 auto;
   }
-  
+
   @media (min-width: 768px) {
     .guarantee-banner {
       flex-direction: row;
       text-align: left;
     }
   }
-  
+
   .guarantee-icon {
     font-size: 3rem;
     flex-shrink: 0;
   }
-  
+
   .guarantee-content {
     flex-grow: 1;
   }
-  
+
   .guarantee-title {
-    font-family: 'Manrope', system-ui, sans-serif;
+    font-family: "Manrope", system-ui, sans-serif;
     font-size: 1.125rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -304,7 +314,7 @@ const jsonLd = {
     margin-bottom: 0.5rem;
     color: var(--success);
   }
-  
+
   .guarantee-text {
     font-size: 0.9375rem;
     color: var(--text-secondary);

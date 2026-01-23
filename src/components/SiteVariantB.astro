@@ -54,12 +54,6 @@ const features = [
     size: "small",
   },
 ];
-
-const stats = [
-  { value: "150+", label: "Currencies" },
-  { value: "∞", label: "Offline" },
-  { value: "₹0", label: "Free" },
-];
 ---
 
 <!-- Hero Section -->{preLaunch ? <PreLaunchHeroB /> : <LaunchHeroB />}
@@ -87,22 +81,6 @@ const stats = [
               <h3 class="bento-title">{feature.title}</h3>
               <p class="bento-description">{feature.description}</p>
             </div>
-          </div>
-        ))
-      }
-    </div>
-  </div>
-</section>
-
-<!-- Stats Section -->
-<section class="stats-section">
-  <div class="container">
-    <div class="stats-grid">
-      {
-        stats.map((stat) => (
-          <div class="stat-card">
-            <span class="stat-value">{stat.value}</span>
-            <span class="stat-label">{stat.label}</span>
           </div>
         ))
       }

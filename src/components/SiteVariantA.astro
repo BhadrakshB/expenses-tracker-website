@@ -2,8 +2,6 @@
 import SectionHeading from "./SectionHeading.astro";
 import FeatureCard from "./FeatureCard.astro";
 import ComparisonTable from "./ComparisonTable.astro";
-import StatsCounter from "./StatsCounter.astro";
-import TestimonialCard from "./TestimonialCard.astro";
 import BrutalButton from "./BrutalButton.astro";
 import PreLaunchHeroA from "./PreLaunchHeroA.astro";
 import LaunchHeroA from "./LaunchHeroA.astro";
@@ -79,19 +77,6 @@ const comparisonFeatures = [
   { name: "Family Sharing", free: false, pro: true },
   { name: "Priority Support", free: false, pro: true },
 ];
-
-const testimonials: {
-  quote: string;
-  name: string;
-  location: string;
-  rating: number;
-}[] = [];
-
-const stats = [
-  { value: "0", suffix: "", label: "Downloads" },
-  { value: "New", suffix: "", label: "App" },
-  { value: "1", suffix: "", label: "Country" },
-];
 ---
 
 <!-- Hero Section -->{preLaunch ? <PreLaunchHeroA /> : <LaunchHeroA />}
@@ -132,35 +117,6 @@ const stats = [
       <BrutalButton href="/pricing" variant="primary" size="lg">
         Upgrade to Pro →
       </BrutalButton>
-    </div>
-  </div>
-</section>
-
-<!-- Social Proof Section -->
-<section class="social-proof-section section-dark">
-  <div class="container">
-    <div class="stats-grid">
-      {
-        stats.map((stat) => (
-          <StatsCounter
-            value={stat.value}
-            suffix={stat.suffix}
-            label={stat.label}
-          />
-        ))
-      }
-    </div>
-    <div class="testimonials-grid">
-      {
-        testimonials.map((t) => (
-          <TestimonialCard
-            quote={t.quote}
-            name={t.name}
-            location={t.location}
-            rating={t.rating}
-          />
-        ))
-      }
     </div>
   </div>
 </section>

@@ -1,229 +1,309 @@
 ---
-import LegalLayout from '../layouts/LegalLayout.astro';
+import LegalLayout from "../layouts/LegalLayout.astro";
+import LegalLayoutB from "../layouts/LegalLayoutB.astro";
+
+// Server-side A/B variant
+let variant = "A";
+const cookieVariant = Astro.cookies.get("hero_variant")?.value;
+if (cookieVariant && (cookieVariant === "A" || cookieVariant === "B")) {
+  variant = cookieVariant;
+}
+
+const Layout = variant === "B" ? LegalLayoutB : LegalLayout;
 ---
 
-<LegalLayout 
-  title="Refund Policy" 
+<Layout
+  title="Refund Policy"
   description="Understand our refund policy for ExpensesTracker Pro subscriptions. 14-day right to cancel and how to request refunds."
   lastUpdated="January 17, 2026"
   version="2.0"
   canonical="/refunds"
 >
-
-<h2 id="overview">Refund Overview</h2>
-<p>
-  We want you to be completely satisfied with ExpensesTracker Pro. This policy explains your rights 
-  regarding cancellations and refunds. Our payment processing is handled by <strong>Paddle</strong>, 
-  our merchant of record.
-</p>
-
-<div class="callout callout-success">
+  <h2 id="overview">Refund Overview</h2>
   <p>
-    <strong>Your Right to Cancel:</strong> You have 14 days from the date of purchase to cancel 
-    your subscription and receive a full refund—no questions asked.
+    We want you to be completely satisfied with ExpensesTracker Pro. This policy
+    explains your rights regarding cancellations and refunds. Our payment
+    processing is handled by <strong>Paddle</strong>, our merchant of record.
   </p>
-</div>
 
-<h2 id="consumer-right-to-cancel">Your 14-Day Right to Cancel</h2>
-<p>
-  As a consumer, you have the right to cancel your subscription within <strong>14 days</strong> 
-  from the day after your purchase without giving any reason. To meet the cancellation deadline, 
-  you must send your cancellation request before the 14-day period expires.
-</p>
+  <div class="callout callout-success">
+    <p>
+      <strong>Your Right to Cancel:</strong> You have 14 days from the date of purchase
+      to cancel your subscription and receive a full refund—no questions asked.
+    </p>
+  </div>
 
-<h3>What Happens When You Cancel</h3>
-<ul>
-  <li><strong>Full reimbursement:</strong> We will reimburse all payments received from you</li>
-  <li><strong>Fast processing:</strong> Refunds are processed within 14 days of receiving your cancellation request</li>
-  <li><strong>Same payment method:</strong> Refunds are credited to your original payment method at no extra cost</li>
-</ul>
-
-<h2 id="digital-content-exception">Digital Content Exception</h2>
-<div class="callout callout-warning">
+  <h2 id="consumer-right-to-cancel">Your 14-Day Right to Cancel</h2>
   <p>
-    <strong>Important:</strong> Your right to cancel does not apply once you have started to 
-    download, stream, or otherwise acquire and use the digital content or Pro features included 
-    in your subscription.
+    As a consumer, you have the right to cancel your subscription within <strong
+      >14 days</strong
+    >
+    from the day after your purchase without giving any reason. To meet the cancellation
+    deadline, you must send your cancellation request before the 14-day period expires.
   </p>
-</div>
-<p>
-  By using ExpensesTracker Pro features after purchase, you acknowledge that you have started 
-  accessing the digital content and may no longer be eligible for the automatic 14-day cancellation right.
-</p>
 
-<h2 id="how-to-request">How to Request a Refund</h2>
+  <h3>What Happens When You Cancel</h3>
+  <ul>
+    <li>
+      <strong>Full reimbursement:</strong> We will reimburse all payments received
+      from you
+    </li>
+    <li>
+      <strong>Fast processing:</strong> Refunds are processed within 14 days of receiving
+      your cancellation request
+    </li>
+    <li>
+      <strong>Same payment method:</strong> Refunds are credited to your original
+      payment method at no extra cost
+    </li>
+  </ul>
 
-<h3>Option 1: Through Paddle (Recommended)</h3>
-<p>
-  Since Paddle is our merchant of record, the fastest way to request a refund or cancellation is 
-  through Paddle directly:
-</p>
-<ul>
-  <li><strong>Paddle Support:</strong> <a href="https://paddle.net" target="_blank" rel="noopener">Contact Paddle</a></li>
-  <li>Provide your purchase email and order details</li>
-  <li>State that you wish to cancel and request a refund</li>
-</ul>
-<p>
-  Paddle will acknowledge your cancellation request without delay and process your refund within 14 days.
-</p>
-
-<h3>Option 2: Through App Store / Google Play</h3>
-<p>
-  If you purchased through an app store, you may also request refunds through them:
-</p>
-
-<h4>For iOS (App Store)</h4>
-<ol>
-  <li>Open the <strong>Settings</strong> app on your iPhone/iPad</li>
-  <li>Tap your <strong>name</strong> at the top → <strong>Subscriptions</strong></li>
-  <li>Select <strong>ExpensesTracker Pro</strong></li>
-  <li>Tap <strong>Cancel Subscription</strong></li>
-  <li>Visit <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener">reportaproblem.apple.com</a> to request a refund</li>
-</ol>
-
-<h4>For Android (Google Play)</h4>
-<ol>
-  <li>Open the <strong>Google Play Store</strong> app</li>
-  <li>Tap your <strong>profile icon</strong> → <strong>Payments & subscriptions</strong></li>
-  <li>Tap <strong>Subscriptions</strong> → <strong>ExpensesTracker Pro</strong></li>
-  <li>Tap <strong>Cancel subscription</strong></li>
-  <li>For refund: Go to <a href="https://play.google.com/store/account/orderhistory" target="_blank" rel="noopener">play.google.com/store/account/orderhistory</a></li>
-</ol>
-
-<h3>Option 3: Contact Us Directly</h3>
-<p>
-  You can also email us directly and we will forward your request to Paddle:
-</p>
-<ul>
-  <li><strong>Email:</strong> <a href="mailto:support@expensestracker.app">support@expensestracker.app</a></li>
-  <li><strong>Subject:</strong> Refund Request - [Your Email]</li>
-  <li><strong>Include:</strong> Your purchase email and order ID (if available)</li>
-</ul>
-
-<h2 id="processing-time">Processing Time</h2>
-<table class="refund-table">
-  <thead>
-    <tr>
-      <th>Platform</th>
-      <th>Processing Time</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Paddle (Direct)</td>
-      <td>Up to 14 days</td>
-    </tr>
-    <tr>
-      <td>App Store (Apple)</td>
-      <td>3-5 business days</td>
-    </tr>
-    <tr>
-      <td>Google Play</td>
-      <td>1-3 business days</td>
-    </tr>
-  </tbody>
-</table>
-<p>
-  Refunds are credited to your original payment method. Bank processing may add 1-3 additional days.
-</p>
-
-<h2 id="cancellation">Cancellation Instructions</h2>
-<p>
-  Canceling your subscription stops future charges but lets you use Pro until the end of your current billing period.
-</p>
-
-<div class="callout">
+  <h2 id="digital-content-exception">Digital Content Exception</h2>
+  <div class="callout callout-warning">
+    <p>
+      <strong>Important:</strong> Your right to cancel does not apply once you have
+      started to download, stream, or otherwise acquire and use the digital content
+      or Pro features included in your subscription.
+    </p>
+  </div>
   <p>
-    <strong>Important:</strong> Deleting the app does NOT cancel your subscription. You must cancel through 
-    your device settings or contact Paddle to stop future charges.
+    By using ExpensesTracker Pro features after purchase, you acknowledge that
+    you have started accessing the digital content and may no longer be eligible
+    for the automatic 14-day cancellation right.
   </p>
-</div>
 
-<h3>Cancel on iPhone/iPad</h3>
-<ol>
-  <li>Open <strong>Settings</strong></li>
-  <li>Tap your <strong>Apple ID</strong> (your name at the top)</li>
-  <li>Tap <strong>Subscriptions</strong></li>
-  <li>Select <strong>ExpensesTracker Pro</strong></li>
-  <li>Tap <strong>Cancel Subscription</strong></li>
-</ol>
+  <h2 id="how-to-request">How to Request a Refund</h2>
 
-<h3>Cancel on Android</h3>
-<ol>
-  <li>Open the <strong>Google Play Store</strong></li>
-  <li>Tap your <strong>profile icon</strong></li>
-  <li>Tap <strong>Payments & subscriptions</strong> → <strong>Subscriptions</strong></li>
-  <li>Select <strong>ExpensesTracker Pro</strong></li>
-  <li>Tap <strong>Cancel subscription</strong></li>
-</ol>
+  <h3>Option 1: Through Paddle (Recommended)</h3>
+  <p>
+    Since Paddle is our merchant of record, the fastest way to request a refund
+    or cancellation is through Paddle directly:
+  </p>
+  <ul>
+    <li>
+      <strong>Paddle Support:</strong>
+      <a href="https://paddle.net" target="_blank" rel="noopener"
+        >Contact Paddle</a>
+    </li>
+    <li>Provide your purchase email and order details</li>
+    <li>State that you wish to cancel and request a refund</li>
+  </ul>
+  <p>
+    Paddle will acknowledge your cancellation request without delay and process
+    your refund within 14 days.
+  </p>
 
-<h2 id="data-after-refund">Data After Cancellation/Refund</h2>
-<p>
-  When your Pro subscription ends (whether canceled or refunded):
-</p>
-<ul>
-  <li><strong>Your data is safe:</strong> All expense records remain on your device</li>
-  <li><strong>Cloud sync stops:</strong> Data won't sync across devices anymore</li>
-  <li><strong>Pro features locked:</strong> AI insights, SMS tracking, etc. become unavailable</li>
-  <li><strong>Data retention:</strong> Cloud data is retained for 30 days in case you resubscribe</li>
-  <li><strong>Export available:</strong> You can always export your data (limited exports on Free plan)</li>
-</ul>
+  <h3>Option 2: Through App Store / Google Play</h3>
+  <p>
+    If you purchased through an app store, you may also request refunds through
+    them:
+  </p>
 
-<h2 id="additional-information">Additional Information</h2>
+  <h4>For iOS (App Store)</h4>
+  <ol>
+    <li>Open the <strong>Settings</strong> app on your iPhone/iPad</li>
+    <li>
+      Tap your <strong>name</strong> at the top → <strong>Subscriptions</strong>
+    </li>
+    <li>Select <strong>ExpensesTracker Pro</strong></li>
+    <li>Tap <strong>Cancel Subscription</strong></li>
+    <li>
+      Visit <a
+        href="https://reportaproblem.apple.com"
+        target="_blank"
+        rel="noopener">reportaproblem.apple.com</a
+      > to request a refund
+    </li>
+  </ol>
 
-<h3>Faulty or Misdescribed Products</h3>
-<p>
-  This refund policy does not affect your statutory rights as a consumer in relation to 
-  products which are not as described, faulty, or not fit for purpose. In such cases, you 
-  may be entitled to a refund regardless of the above terms.
-</p>
+  <h4>For Android (Google Play)</h4>
+  <ol>
+    <li>Open the <strong>Google Play Store</strong> app</li>
+    <li>
+      Tap your <strong>profile icon</strong> → <strong
+        >Payments & subscriptions</strong>
+    </li>
+    <li>
+      Tap <strong>Subscriptions</strong> → <strong>ExpensesTracker Pro</strong>
+    </li>
+    <li>Tap <strong>Cancel subscription</strong></li>
+    <li>
+      For refund: Go to <a
+        href="https://play.google.com/store/account/orderhistory"
+        target="_blank"
+        rel="noopener">play.google.com/store/account/orderhistory</a>
+    </li>
+  </ol>
 
-<h3>Subscription Renewals</h3>
-<p>
-  The 14-day right to cancel applies to your initial subscription purchase. Automatic 
-  renewals are not covered by the 14-day cancellation right, but you can cancel your 
-  subscription at any time to prevent future renewals.
-</p>
+  <h3>Option 3: Contact Us Directly</h3>
+  <p>
+    You can also email us directly and we will forward your request to Paddle:
+  </p>
+  <ul>
+    <li>
+      <strong>Email:</strong>
+      <a href="mailto:support@expensestracker.app"
+        >support@expensestracker.app</a>
+    </li>
+    <li><strong>Subject:</strong> Refund Request - [Your Email]</li>
+    <li>
+      <strong>Include:</strong> Your purchase email and order ID (if available)
+    </li>
+  </ul>
 
-<h2 id="contact">Contact Support</h2>
-<p>
-  Have questions about refunds or need assistance?
-</p>
-<ul>
-  <li><strong>Paddle Support:</strong> <a href="https://paddle.net" target="_blank" rel="noopener">paddle.net</a> (recommended for refunds)</li>
-  <li><strong>Email:</strong> <a href="mailto:support@expensestracker.app">support@expensestracker.app</a></li>
-  <li><strong>In-App:</strong> Settings → Help & Support → Contact Us</li>
-</ul>
+  <h2 id="processing-time">Processing Time</h2>
+  <table class="refund-table">
+    <thead>
+      <tr>
+        <th>Platform</th>
+        <th>Processing Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Paddle (Direct)</td>
+        <td>Up to 14 days</td>
+      </tr>
+      <tr>
+        <td>App Store (Apple)</td>
+        <td>3-5 business days</td>
+      </tr>
+      <tr>
+        <td>Google Play</td>
+        <td>1-3 business days</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    Refunds are credited to your original payment method. Bank processing may
+    add 1-3 additional days.
+  </p>
 
-</LegalLayout>
+  <h2 id="cancellation">Cancellation Instructions</h2>
+  <p>
+    Canceling your subscription stops future charges but lets you use Pro until
+    the end of your current billing period.
+  </p>
+
+  <div class="callout">
+    <p>
+      <strong>Important:</strong> Deleting the app does NOT cancel your subscription.
+      You must cancel through your device settings or contact Paddle to stop future
+      charges.
+    </p>
+  </div>
+
+  <h3>Cancel on iPhone/iPad</h3>
+  <ol>
+    <li>Open <strong>Settings</strong></li>
+    <li>Tap your <strong>Apple ID</strong> (your name at the top)</li>
+    <li>Tap <strong>Subscriptions</strong></li>
+    <li>Select <strong>ExpensesTracker Pro</strong></li>
+    <li>Tap <strong>Cancel Subscription</strong></li>
+  </ol>
+
+  <h3>Cancel on Android</h3>
+  <ol>
+    <li>Open the <strong>Google Play Store</strong></li>
+    <li>Tap your <strong>profile icon</strong></li>
+    <li>
+      Tap <strong>Payments & subscriptions</strong> → <strong
+        >Subscriptions</strong>
+    </li>
+    <li>Select <strong>ExpensesTracker Pro</strong></li>
+    <li>Tap <strong>Cancel subscription</strong></li>
+  </ol>
+
+  <h2 id="data-after-refund">Data After Cancellation/Refund</h2>
+  <p>When your Pro subscription ends (whether canceled or refunded):</p>
+  <ul>
+    <li>
+      <strong>Your data is safe:</strong> All expense records remain on your device
+    </li>
+    <li>
+      <strong>Cloud sync stops:</strong> Data won't sync across devices anymore
+    </li>
+    <li>
+      <strong>Pro features locked:</strong> AI insights, SMS tracking, etc. become
+      unavailable
+    </li>
+    <li>
+      <strong>Data retention:</strong> Cloud data is retained for 30 days in case
+      you resubscribe
+    </li>
+    <li>
+      <strong>Export available:</strong> You can always export your data (limited
+      exports on Free plan)
+    </li>
+  </ul>
+
+  <h2 id="additional-information">Additional Information</h2>
+
+  <h3>Faulty or Misdescribed Products</h3>
+  <p>
+    This refund policy does not affect your statutory rights as a consumer in
+    relation to products which are not as described, faulty, or not fit for
+    purpose. In such cases, you may be entitled to a refund regardless of the
+    above terms.
+  </p>
+
+  <h3>Subscription Renewals</h3>
+  <p>
+    The 14-day right to cancel applies to your initial subscription purchase.
+    Automatic renewals are not covered by the 14-day cancellation right, but you
+    can cancel your subscription at any time to prevent future renewals.
+  </p>
+
+  <h2 id="contact">Contact Support</h2>
+  <p>Have questions about refunds or need assistance?</p>
+  <ul>
+    <li>
+      <strong>Paddle Support:</strong>
+      <a href="https://paddle.net" target="_blank" rel="noopener">paddle.net</a> (recommended
+      for refunds)
+    </li>
+    <li>
+      <strong>Email:</strong>
+      <a href="mailto:support@expensestracker.app"
+        >support@expensestracker.app</a>
+    </li>
+    <li><strong>In-App:</strong> Settings → Help & Support → Contact Us</li>
+  </ul>
+</Layout>
 
 <style>
   .refund-table {
     width: 100%;
     border-collapse: collapse;
     margin: 1.5rem 0;
-    border: 2px solid var(--text-muted);
+    border: 2px solid var(--text-muted, #e5e5e7);
+    border-radius: 8px;
+    overflow: hidden;
   }
-  
+
   .refund-table th,
   .refund-table td {
     padding: 0.75rem 1rem;
     text-align: left;
-    border-bottom: 1px solid var(--background-tertiary);
+    border-bottom: 1px solid var(--background-tertiary, #e5e5e7);
   }
-  
+
   .refund-table th {
-    background: var(--background-tertiary);
-    font-family: 'Manrope', system-ui, sans-serif;
+    background: var(--background-tertiary, #f5f5f7);
+    font-family:
+      "Inter",
+      -apple-system,
+      system-ui,
+      sans-serif;
     font-weight: 700;
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--text-primary);
+    color: var(--text-primary, #1d1d1f);
   }
-  
+
   .refund-table td {
-    color: var(--text-secondary);
+    color: var(--text-secondary, #86868b);
     font-size: 0.9375rem;
   }
 </style>

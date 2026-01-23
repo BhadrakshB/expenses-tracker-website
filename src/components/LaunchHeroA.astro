@@ -1,0 +1,307 @@
+---
+import BrutalButton from "./BrutalButton.astro";
+---
+
+<section class="hero-section">
+  <div class="container hero-container">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        YOUR MONEY.<br />
+        <span class="hero-accent">UNDER CONTROL.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Track every expense, plan your budget, and take control of your
+        finances. Works offline. No signup required.
+      </p>
+      <div class="hero-counter">
+        <span class="counter-value">₹0</span>
+        <span class="counter-label">Start tracking your expenses today</span>
+      </div>
+      <div class="hero-cta">
+        <BrutalButton
+          href="https://apps.apple.com/app/expenses-tracker"
+          variant="primary"
+          size="lg"
+          external
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" class="btn-icon">
+            <path
+              d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"
+            ></path>
+          </svg>
+          Download Free
+        </BrutalButton>
+        <BrutalButton href="/pricing" variant="secondary" size="lg">
+          See Pricing →
+        </BrutalButton>
+      </div>
+      <div class="store-badges">
+        <a
+          href="https://play.google.com/store/apps/details?id=app.expensestracker"
+          class="store-badge"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" class="badge-icon">
+            <path
+              d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"
+            ></path>
+          </svg>
+          Also on Play Store
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <div class="app-preview">
+            <div class="app-header">
+              <span class="app-title">💰 Expenses</span>
+              <span class="app-balance">₹0</span>
+            </div>
+            <div class="expense-list">
+              <div class="expense-item">
+                <span class="expense-icon">🍕</span>
+                <div class="expense-details">
+                  <span class="expense-name">Food & Dining</span>
+                  <span class="expense-date">Today</span>
+                </div>
+                <span class="expense-amount">-₹450</span>
+              </div>
+              <div class="expense-item">
+                <span class="expense-icon">🚗</span>
+                <div class="expense-details">
+                  <span class="expense-name">Transport</span>
+                  <span class="expense-date">Yesterday</span>
+                </div>
+                <span class="expense-amount">-₹120</span>
+              </div>
+              <div class="expense-item">
+                <span class="expense-icon">🛒</span>
+                <div class="expense-details">
+                  <span class="expense-name">Groceries</span>
+                  <span class="expense-date">2 days ago</span>
+                </div>
+                <span class="expense-amount">-₹1,250</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Track app download clicks
+  document.addEventListener("DOMContentLoaded", () => {
+    const downloadButtons = document.querySelectorAll(
+      'a[href*="apps.apple.com"], a[href*="play.google.com"]',
+    );
+    downloadButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const href = (button as HTMLAnchorElement).href;
+        (window as any).posthog?.capture("app_download_clicked", {
+          variant: "A",
+          store: href.includes("apple") ? "app_store" : "play_store",
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .hero-section {
+    padding-block: clamp(4rem, 12vh, 8rem) clamp(6rem, 15vh, 10rem);
+    overflow: hidden;
+  }
+
+  .hero-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-container {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .hero-content {
+    max-width: 600px;
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 10vw, 6rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-accent {
+    color: var(--accent-primary);
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    max-width: 500px;
+  }
+
+  .hero-counter {
+    display: inline-flex;
+    flex-direction: column;
+    padding: 1rem 1.5rem;
+    background: var(--background-secondary);
+    border: 3px solid var(--accent-primary);
+    margin-bottom: 2rem;
+  }
+
+  .counter-value {
+    font-family: "Manrope", system-ui, sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--accent-primary);
+  }
+
+  .counter-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .store-badges {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .store-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--text-muted);
+    transition: all 150ms ease;
+  }
+
+  .store-badge:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+  }
+
+  .badge-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .phone-mockup {
+    width: 280px;
+    padding: 12px;
+    background: var(--background-primary);
+    border: 5px solid var(--text-primary);
+    border-radius: 24px;
+    transform: rotate(3deg);
+    transition: transform 300ms ease;
+  }
+
+  .phone-mockup:hover {
+    transform: rotate(0deg) scale(1.02);
+  }
+
+  .phone-screen {
+    background: var(--background-secondary);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .app-preview {
+    padding: 1rem;
+  }
+
+  .app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--background-tertiary);
+    margin-bottom: 1rem;
+  }
+
+  .app-title {
+    font-family: "Manrope", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+  }
+
+  .app-balance {
+    font-family: "Manrope", system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--accent-primary);
+  }
+
+  .expense-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .expense-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: var(--background-tertiary);
+    border-left: 3px solid var(--accent-secondary);
+  }
+
+  .expense-icon {
+    font-size: 1.25rem;
+  }
+
+  .expense-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .expense-name {
+    font-weight: 600;
+    font-size: 0.8125rem;
+  }
+
+  .expense-date {
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+  }
+
+  .expense-amount {
+    font-family: "Manrope", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--error);
+  }
+</style>

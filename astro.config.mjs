@@ -13,6 +13,7 @@ export default defineConfig({
       filter: (page) => !page.includes("/admin"),
     }),
   ],
+  output: 'server',
   compressHTML: true,
   build: {
     inlineStylesheets: "auto",

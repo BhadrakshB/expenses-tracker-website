@@ -1,0 +1,192 @@
+---
+import BrutalButton from "./BrutalButton.astro";
+import WaitlistForm from "./WaitlistForm.astro";
+---
+
+<section class="hero-section">
+  <div class="container hero-container">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        YOUR MONEY.<br />
+        <span class="hero-accent">UNDER CONTROL.</span>
+      </h1>
+      <p class="hero-subtitle">
+        The ultimate offline-first expense tracker is coming soon. Take control
+        of your finances from Day 1.
+      </p>
+
+      <div class="waitlist-container">
+        <WaitlistForm variant="A" />
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <div class="app-preview">
+            <div class="app-header">
+              <span class="app-title">💰 Expenses</span>
+              <span class="app-balance">₹0</span>
+            </div>
+            <div class="expense-list">
+              <div class="expense-item">
+                <span class="expense-icon">🍕</span>
+                <div class="expense-details">
+                  <span class="expense-name">Food & Dining</span>
+                  <span class="expense-date">Today</span>
+                </div>
+                <span class="expense-amount">-₹450</span>
+              </div>
+              <div class="expense-item">
+                <span class="expense-icon">🚗</span>
+                <div class="expense-details">
+                  <span class="expense-name">Transport</span>
+                  <span class="expense-date">Yesterday</span>
+                </div>
+                <span class="expense-amount">-₹120</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    padding-block: clamp(4rem, 12vh, 8rem) clamp(6rem, 15vh, 10rem);
+    overflow: hidden;
+  }
+
+  .hero-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-container {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .hero-content {
+    max-width: 600px;
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 10vw, 6rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-accent {
+    color: var(--accent-primary);
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+  }
+
+  .waitlist-container {
+    margin-bottom: 2rem;
+  }
+
+  /* Phone Mockup */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .phone-mockup {
+    width: 280px;
+    padding: 12px;
+    background: var(--background-primary);
+    border: 5px solid var(--text-primary);
+    border-radius: 24px;
+    transform: rotate(3deg);
+    transition: transform 300ms ease;
+  }
+
+  .phone-screen {
+    background: var(--background-secondary);
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 380px;
+  }
+
+  .app-preview {
+    padding: 1rem;
+  }
+
+  .app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--background-tertiary);
+    margin-bottom: 1rem;
+  }
+
+  .app-title {
+    font-family: "Manrope", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+  }
+
+  .app-balance {
+    font-family: "Manrope", system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--accent-primary);
+  }
+
+  .expense-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .expense-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: var(--background-tertiary);
+    border-left: 3px solid var(--accent-secondary);
+  }
+
+  .expense-icon {
+    font-size: 1.25rem;
+  }
+
+  .expense-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .expense-name {
+    font-weight: 600;
+    font-size: 0.8125rem;
+  }
+
+  .expense-date {
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+  }
+
+  .expense-amount {
+    font-family: "Manrope", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--error);
+  }
+</style>

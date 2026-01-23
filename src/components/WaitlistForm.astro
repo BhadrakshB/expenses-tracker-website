@@ -1,0 +1,303 @@
+---
+interface Props {
+  variant?: string;
+}
+
+const { variant = "A" } = Astro.props;
+---
+
+<div class="waitlist-form-container">
+  <div id="waitlist-success" class="waitlist-success" style="display: none;">
+    <div class="success-content">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="48"
+        height="48"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="check-icon"
+      >
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+      <h3>You're on the list!</h3>
+      <p>We'll notify you as soon as we're ready for takeoff.</p>
+    </div>
+  </div>
+
+  <form id="waitlist-form" class="waitlist-form">
+    <div class="input-group">
+      <input
+        type="email"
+        id="waitlist-email"
+        placeholder="Enter your email address"
+        class="email-input"
+      />
+    </div>
+
+    <div id="waitlist-error" class="error-message" style="display: none;">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <span id="error-text">Something went wrong. Please try again.</span>
+    </div>
+
+    <button type="submit" id="waitlist-submit" class="submit-btn">
+      <span class="btn-text">Join Waitlist</span>
+      <span class="btn-loader" style="display: none;">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="animate-spin"
+        >
+          <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+        </svg>
+        Joining...
+      </span>
+    </button>
+    <p class="form-footer">
+      Join 500+ people waiting for the best expense tracker.
+    </p>
+  </form>
+</div>
+
+<script define:vars={{ variant }}>
+  const form = document.getElementById("waitlist-form");
+  const emailInput = document.getElementById("waitlist-email");
+  const submitBtn = document.getElementById("waitlist-submit");
+  const btnText = submitBtn.querySelector(".btn-text");
+  const btnLoader = submitBtn.querySelector(".btn-loader");
+  const successDiv = document.getElementById("waitlist-success");
+  const errorDiv = document.getElementById("waitlist-error");
+  const errorText = document.getElementById("error-text");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = emailInput.value;
+
+    if (!email) return;
+
+    // Set loading state
+    submitBtn.disabled = true;
+    btnText.style.display = "none";
+    btnLoader.style.display = "flex";
+    errorDiv.style.display = "none";
+
+    try {
+      // Use the API endpoint we created
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to join waitlist");
+      }
+
+      // Track with PostHog
+      if (window.posthog) {
+        window.posthog.capture("waitlist_signup", {
+          email,
+          variant,
+          source: "join_waitlist_page",
+        });
+      }
+
+      // Show success
+      form.style.display = "none";
+      successDiv.style.display = "block";
+    } catch (error) {
+      console.error("Error adding to waitlist:", error);
+      errorDiv.style.display = "flex";
+      errorText.textContent = "Something went wrong. Please try again.";
+
+      // Reset button
+      submitBtn.disabled = false;
+      btnText.style.display = "block";
+      btnLoader.style.display = "none";
+    }
+  });
+</script>
+
+<style>
+  .waitlist-form-container {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+  }
+
+  .waitlist-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    animation: slideUp 0.5s ease-out;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .email-input {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: white;
+    border: 3px solid #000;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+    border-radius: 12px;
+    font-size: 1rem;
+    color: #000000;
+    transition: all 0.2s ease;
+  }
+
+  .email-input:focus {
+    outline: none;
+    border-color: var(--accent-primary, #667eea);
+  }
+
+  .email-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .submit-btn {
+    width: 100%;
+    background: #000;
+    color: white;
+    padding: 1rem 2rem;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 4px 4px 0px 0px #22c55e;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .submit-btn:hover:not(:disabled) {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px 0px #22c55e;
+  }
+
+  .submit-btn:active:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.7;
+    cursor: wait;
+  }
+
+  .btn-loader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .form-footer {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-top: 1rem;
+  }
+
+  .waitlist-success {
+    background: #f0fdf4;
+    border: 2px solid #22c55e;
+    padding: 1.5rem;
+    border-radius: 16px;
+    text-align: center;
+    animation: scaleIn 0.3s ease-out;
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .check-icon {
+    color: #22c55e;
+    margin: 0 auto 1rem;
+  }
+
+  .success-content h3 {
+    color: #14532d;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .success-content p {
+    color: #15803d;
+  }
+
+  .error-message {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #dc2626;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.5rem;
+    background: #fef2f2;
+    border-radius: 8px;
+  }
+</style>

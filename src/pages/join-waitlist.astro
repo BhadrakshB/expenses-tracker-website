@@ -1,0 +1,75 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PreLaunchHeroB from "../components/PreLaunchHeroB.astro";
+import PreLaunchHeroA from "../components/PreLaunchHeroA.astro";
+
+// This page will use PostHog's feature flags to decide which variant to show
+---
+
+<BaseLayout
+  title="Join the Waitlist | Expenses Tracker"
+  description="Be among the first to experience the ultimate offline-first expense tracker. Join our waitlist for early access."
+>
+  <Header slot="header" />
+
+  <main id="experiment-content">
+    <div
+      id="loading-state"
+      class="min-h-[60vh] flex items-center justify-center"
+    >
+      <div
+        class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent-primary"
+      >
+      </div>
+    </div>
+
+    <div id="variant-a" style="display: none;">
+      <PreLaunchHeroA />
+    </div>
+
+    <div id="variant-b" style="display: none;">
+      <PreLaunchHeroB />
+    </div>
+  </main>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<script is:inline>
+  function showVariant(variant) {
+    const loading = document.getElementById("loading-state");
+    const variantA = document.getElementById("variant-a");
+    const variantB = document.getElementById("variant-b");
+
+    if (loading) loading.style.display = "none";
+
+    if (variant === "test-variant-b") {
+      if (variantB) variantB.style.display = "block";
+      console.log("PostHog: Rendering Variant B");
+    } else {
+      if (variantA) variantA.style.display = "block";
+      console.log("PostHog: Rendering Variant A (Default)");
+    }
+  }
+
+  // Initialize PostHog and check flags
+  if (window.posthog) {
+    posthog.onFeatureFlags(() => {
+      const variant = posthog.getFeatureFlag("pre-launch-experiment");
+      showVariant(variant);
+    });
+
+    // Fallback if flags take too long
+    setTimeout(() => {
+      const variant = posthog.getFeatureFlag("pre-launch-experiment");
+      if (document.getElementById("loading-state")?.style.display !== "none") {
+        showVariant(variant);
+      }
+    }, 3000);
+  } else {
+    // Fallback if PostHog is not loaded
+    showVariant("control");
+  }
+</script>

@@ -43,15 +43,6 @@ const navLinks = [
       >
         <span class="hamburger"></span>
       </button>
-
-      <button class="main-button">Click me!</button>
-
-      <script>
-        const button = document.querySelector(".main-button")!;
-        button.addEventListener("click", () => {
-          (window as any).posthog.capture("home_button_clicked");
-        });
-      </script>
     </div>
   </div>
 
